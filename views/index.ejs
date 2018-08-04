@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Index</title>
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var socket = io.connect();
+            $('form').submit(function() {
+                socket.emit("posting_form", {name: $('input:text').val(), location: $('#location').val(), language: $('#language').val(), comment: $('textarea').val()});
+                console.log("Client posting_form triggered!");
+                // 'return false' prevents submitting the form and moving away from the page 
+                return false;
+            });
+            socket.on('updated_message', function(data) {
+                console.log("Client updated_message triggered!");
+                $('div').css("visibility", "visible");
+                $('#msg_1').text(`You emitted the following information to the server: { name: ${data.name}, location: ${data.location}, language: ${data.language}, comment: ${data.comment}}`);
+            });
+            socket.on('random_number', function(data) {
+                console.log("Client random_number triggered!");
+                $('#msg_2').text(`Your lucky number emitted by the server is ${data.num}.`);
+            });
+        });
+    </script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+            </div>
+        </div>
+    </nav>
+    <div>
+        <p id="msg_1"></p>
+        <p id="msg_2"></p>
+    </div>
+    <h2 class="text-center"><%= page.title %></h2>
+    <br><br><br><br>
+    <h2 class="text-center"><%= page.message %></h2>
+    <form action="/submitInfo" method="post">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" class="form-control" id="name" name='name' placeholder="Default">
+        </div>
+        <div class="form-group">
+          <label for="location">Dojo Location</label>
+          <select class="form-control" id="location" name='location'>
+            <% for (var i in page.locations) { %>
+                <option><%= page.locations[i] %></option>
+            <% } %>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="language">Favorite Language</label>
+          <select class="form-control" id="language" name='language'>
+                <% for (var j in page.langs) { %>
+                    <option><%= page.langs[j] %></option>
+                <% } %>
+          </select>
+        </div>
+        <div class="form-group">
+            <label for="database">Favorite Database</label>
+            <select class="form-control" id="database"name='database' >
+                <% for (var k in page.dbs) { %>
+                    <option><%= page.dbs[k] %></option>
+                <% } %>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="framework">Favorite Framework</label>
+            <select class="form-control" id="framework" name='framework'>
+                <% for (var l in page.fwks) { %>
+                    <option><%= page.fwks[l] %></option>
+                <% } %>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="instrucor">Favorite Instrucor</label>
+            <select class="form-control" id="instrucor" name='instructor'>
+                <% for (var m in page.instructor) { %>
+                    <option><%= page.instructor[m] %></option>
+                <% } %>
+            </select>
+        </div>
+        <div class="form-group">
+          <label for="comment">Comment (optional)</label>
+          <textarea class="form-control" id="comment" rows="3" name='comment'></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Submit</button>
+    </form>
+</body>
+</html>

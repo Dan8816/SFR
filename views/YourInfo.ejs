@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Index</title>
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link active" href="/">Index<span class="sr-only">(current)</span></a>
+            </div>
+        </div>
+    </nav>
+    <h2 class="text-center"><%= page.title%></h2>
+    <h3 class="text-center"><%= page.message%></h3>
+    <ul class="list-group">
+        <li class="list-group-item ">Name: <%= page.name %></li>
+        <li class="list-group-item ">Location: <%= page.loc %></li>
+        <li class="list-group-item ">Favorite Language: <%= page.lang %></li>
+        <li class="list-group-item ">Favorit Framework: <%= page.frame %></li>
+        <li class="list-group-item ">Favorite Instructor: <%= page.instructor %></li>
+        <li class="list-group-item ">Your Comment: <%= page.comment %></li>
+    </ul>
+</body>
+</html>
